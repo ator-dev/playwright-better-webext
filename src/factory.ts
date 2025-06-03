@@ -1,5 +1,5 @@
 import { BrowserType } from "playwright";
-import { FirefoxWithExtension } from "./firefox_browser";
+import { FirefoxWithExtensions } from "./firefox_browser";
 import { ChromiumWithExtensions } from "./chromium_browser";
 
 export const withExtension = (
@@ -8,7 +8,7 @@ export const withExtension = (
 ): BrowserType => {
   switch (browserType.name()) {
     case "firefox":
-      return new FirefoxWithExtension(browserType, extensionsPaths);
+      return new FirefoxWithExtensions(browserType, extensionsPaths);
     case "chromium":
       return new ChromiumWithExtensions(browserType, extensionsPaths);
   }

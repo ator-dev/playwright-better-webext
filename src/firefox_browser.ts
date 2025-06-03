@@ -22,7 +22,7 @@ type LaunchPersistentContextOptions = Parameters<
 type PortFn = () => number | Promise<number>;
 type Port = number | PortFn;
 
-export class FirefoxWithExtension implements BrowserType {
+export class FirefoxWithExtensions implements BrowserType {
   private readonly addonPaths: string[];
   private readonly defaultPort: Port;
 
