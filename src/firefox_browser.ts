@@ -4,6 +4,8 @@ import type {
   BrowserType,
   BrowserServer,
   LaunchOptions,
+  ConnectOverCDPOptions,
+  ConnectOptions,
 } from "playwright-core";
 import { FirefoxOverrides } from "./firefox_overrides";
 import { FirefoxAddonInstaller } from "./firefox_addon_installer";
@@ -32,24 +34,36 @@ export class FirefoxWithExtension implements BrowserType {
     if (browserType.name() !== "firefox") {
       throw new Error(`unexpected browser: ${browserType.name()}`);
     }
+
     this.defaultPort = defaultDebuggingServerPort;
-
-    if (typeof addonPaths === "string") {
-      this.addonPaths = [addonPaths];
-    } else {
-      this.addonPaths = addonPaths;
-    }
-
-    this.connectOverCDP = browserType.connectOverCDP;
-    this.connect = browserType.connect;
-    this.executablePath = browserType.executablePath;
-    this.name = browserType.name;
+    this.addonPaths = typeof addonPaths === "string" ? [ addonPaths ] : addonPaths;
   }
 
-  connectOverCDP;
-  connect;
-  executablePath;
-  name;
+  async connectOverCDP(
+    endpointURLOrOptions: string | (ConnectOverCDPOptions & { wsEndpoint?: string }),
+    options?: ConnectOverCDPOptions,
+  ): Promise<Browser> {
+    if (typeof endpointURLOrOptions === "string") {
+      return this.browserType.connectOverCDP(endpointURLOrOptions, options);
+    } else {
+      return this.browserType.connectOverCDP(endpointURLOrOptions);
+    }
+  }
+
+  async connect(
+    wsEndpointOrOptions: string | (ConnectOptions & { wsEndpoint?: string }),
+    options?: ConnectOptions,
+  ): Promise<Browser> {
+    if (typeof wsEndpointOrOptions === "string") {
+      return this.browserType.connect(wsEndpointOrOptions, options);
+    } else {
+      return this.browserType.connect(wsEndpointOrOptions);
+    }
+  }
+
+  executablePath(): string {
+    return this.browserType.executablePath();
+  }
 
   async launch(options: LaunchOptions = {}): Promise<Browser> {
     const overrides = new FirefoxOverrides(await this.getDefaultPort());
@@ -75,21 +89,16 @@ export class FirefoxWithExtension implements BrowserType {
     // patch extension preferences before launch
     await this.overridePermissions(userDataDir);
 
-    const browser = await this.browserType.launchPersistentContext(
-      userDataDir,
-      {
-        ...options,
-        args,
-        firefoxUserPrefs,
-      },
-    );
+    const browser = await this.browserType.launchPersistentContext(userDataDir, {
+      ...options,
+      args,
+      firefoxUserPrefs,
+    });
     await this.installAddons(port);
     return browser;
   }
 
-  async launchServer(
-    options: LaunchServerOptions = {},
-  ): Promise<BrowserServer> {
+  async launchServer(options: LaunchServerOptions = {}): Promise<BrowserServer> {
     const overrides = new FirefoxOverrides(await this.getDefaultPort());
     const { args, port } = overrides.debuggingServerPortArgs(options.args);
     const firefoxUserPrefs = overrides.userPrefs(options.firefoxUserPrefs);
@@ -100,6 +109,10 @@ export class FirefoxWithExtension implements BrowserType {
     });
     await this.installAddons(port);
     return browserServer;
+  }
+
+  name(): string {
+    return this.browserType.name();
   }
 
   async installAddons(debuggingServerPort: number): Promise<void> {

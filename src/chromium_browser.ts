@@ -4,6 +4,8 @@ import type {
   BrowserType,
   BrowserServer,
   LaunchOptions,
+  ConnectOverCDPOptions,
+  ConnectOptions,
 } from "playwright-core";
 import { ChromiumOverrides } from "./chromium_overrides";
 
@@ -22,44 +24,59 @@ export class ChromiumWithExtensions implements BrowserType {
     if (browserType.name() !== "chromium") {
       throw new Error(`unexpected browser: ${browserType.name()}`);
     }
-    this.overrides = new ChromiumOverrides(extPaths);
 
-    this.connectOverCDP = browserType.connectOverCDP;
-    this.connect = browserType.connect;
-    this.executablePath = browserType.executablePath;
-    this.name = browserType.name;
+    this.overrides = new ChromiumOverrides(extPaths);
   }
 
-  connectOverCDP;
-  connect;
-  executablePath;
-  name;
+  async connectOverCDP(
+    endpointURLOrOptions: string | (ConnectOverCDPOptions & { wsEndpoint?: string }),
+    options?: ConnectOverCDPOptions,
+  ): Promise<Browser> {
+    if (typeof endpointURLOrOptions === "string") {
+      return this.browserType.connectOverCDP(endpointURLOrOptions, options);
+    } else {
+      return this.browserType.connectOverCDP(endpointURLOrOptions);
+    }
+  }
+
+  async connect(
+    wsEndpointOrOptions: string | (ConnectOptions & { wsEndpoint?: string }),
+    options?: ConnectOptions,
+  ): Promise<Browser> {
+    if (typeof wsEndpointOrOptions === "string") {
+      return this.browserType.connect(wsEndpointOrOptions, options);
+    } else {
+      return this.browserType.connect(wsEndpointOrOptions);
+    }
+  }
+
+  executablePath(): string {
+    return this.browserType.executablePath();
+  }
 
   async launch(options: LaunchOptions = {}): Promise<Browser> {
     const args = this.overrides.args(options.args);
-    const browser = await this.browserType.launch({ ...options, args });
-    return browser;
+    return this.browserType.launch({ ...options, args });
   }
 
   async launchPersistentContext(
     userDataDir: string,
     options: LaunchPersistentContextOptions = {},
   ): Promise<BrowserContext> {
-    const args = this.overrides.args(options.args);
     return this.browserType.launchPersistentContext(userDataDir, {
       ...options,
-      args,
+      args: this.overrides.args(options.args),
     });
   }
 
-  async launchServer(
-    options: LaunchServerOptions = {},
-  ): Promise<BrowserServer> {
-    const args = this.overrides.args(options.args);
-    const browserServer = await this.browserType.launchServer({
+  async launchServer(options: LaunchServerOptions = {}): Promise<BrowserServer> {
+    return this.browserType.launchServer({
       ...options,
-      args,
+      args: this.overrides.args(options.args),
     });
-    return browserServer;
+  }
+
+  name(): string {
+    return this.browserType.name();
   }
 }
