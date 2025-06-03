@@ -1,9 +1,10 @@
 {
   "name": "playwright-webextext",
-  "version": "0.0.4",
-  "description": "Playwright extension for tesiting WebExtensions",
-  "repository": "git@github.com:ueokande/playwright-webextext.git",
+  "version": "0.1.0",
+  "description": " A patched version of ~ueokande's Playwright extension, for testing WebExtensions",
+  "repository": "git@github.com:ator-dev/playwright-webextext.git",
   "author": "Shin'ya Ueoka <ueokande@i-beam.org>",
+  "contributors": [ "ator-dev <ator-dev@protonmail.com>" ],
   "license": "MIT",
   "packageManager": "pnpm@8.14.1",
   "engines": {

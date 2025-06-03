@@ -8,7 +8,9 @@ test("should installs add-ons with custom browser type", async () => {
     path.join(__dirname, "magic-number-extension"),
     path.join(__dirname, "deadbeef-extension"),
   ]);
-  const browser = await browserTypeWithExtension.launch({ headless: true });
+  const browser = await browserTypeWithExtension.launch({
+    headless: true,
+  });
 
   const page = await browser.newPage();
   await page.goto("https://example.com/");

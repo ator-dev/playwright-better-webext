@@ -21,7 +21,8 @@ export const createFixture = (extPaths: string | string[]) => {
           }
           const browserType = withExtension(playwright[browserName], extPaths);
           const newContext = await browserType.launchPersistentContext("", {
-            headless: false,
+            channel: "chromium",
+            headless: true,
           });
           await use(newContext);
           await context.close();

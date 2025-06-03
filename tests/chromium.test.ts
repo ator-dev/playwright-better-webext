@@ -9,7 +9,9 @@ test("chromium installs extensions with custom browser type", async () => {
     path.join(__dirname, "magic-number-extension"),
   ]);
   const browser = await browserTypeWithExtension.launchPersistentContext("", {
-    headless: false,
+    // Note: "chromium" channel is required to prevent displaying windows ('new headless mode')
+    channel: "chromium",
+    headless: true,
   });
 
   const page = await browser.newPage();

@@ -44,10 +44,9 @@ const launchChromium = async () => {
     "path/to/your/extensions",
   );
 
-  // chromium extensions works only in headed browsers with persistent contexts
-  const browser = await browserTypeWithExtension.launchPersistentContext("", {
-    headless: false,
-  });
+  // Chromium extensions work only in a persistent context
+  // The channel must be "chromium" in order for the browser not to display ('new headless mode')
+  const browser = await browserTypeWithExtension.launchPersistentContext("");
 
   const page = await browser.newPage();
   await page.goto("https://example.com/");
@@ -76,6 +75,8 @@ test("should launch browser with extensions", async ({ page }) => {
 ```
 
 ## Manifest v3 support
+
+**Note:** The information in this section may be outdated.
 
 The playwright-webextext does not fully support manifest v3 on Firefox.
 Firefox asks users to allow loading content scripts since Manifest v3.
