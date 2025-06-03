@@ -4,13 +4,14 @@ import { ChromiumWithExtensions } from "./chromium_browser";
 
 export const withExtension = (
   browserType: BrowserType,
-  extensionsPaths: string | string[],
+  extensionPaths: string | string[],
 ): BrowserType => {
+  const _extensionPaths = typeof extensionPaths === "string" ? [ extensionPaths ] : extensionPaths;
   switch (browserType.name()) {
     case "firefox":
-      return new FirefoxWithExtensions(browserType, extensionsPaths);
+      return new FirefoxWithExtensions(browserType, _extensionPaths);
     case "chromium":
-      return new ChromiumWithExtensions(browserType, extensionsPaths);
+      return new ChromiumWithExtensions(browserType, _extensionPaths);
   }
   throw new Error(`unsupported browser: ${browserType.name()}`);
 };

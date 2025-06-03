@@ -1,12 +1,8 @@
 export class ChromiumOverrides {
   private readonly extensionPaths: string[];
 
-  constructor(extPaths: string | string[]) {
-    if (typeof extPaths === "string") {
-      this.extensionPaths = [extPaths];
-    } else {
-      this.extensionPaths = extPaths;
-    }
+  constructor(extPaths: string[]) {
+    this.extensionPaths = extPaths;
   }
 
   args(args: string[] = []) {

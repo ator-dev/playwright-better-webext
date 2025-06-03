@@ -23,12 +23,11 @@ type PortFn = () => number | Promise<number>;
 type Port = number | PortFn;
 
 export class FirefoxWithExtensions implements BrowserType {
-  private readonly addonPaths: string[];
   private readonly defaultPort: Port;
 
   constructor(
     private readonly browserType: BrowserType,
-    addonPaths: string | string[],
+    private readonly addonPaths: string[],
     defaultDebuggingServerPort: number | PortFn = findFreeTcpPort,
   ) {
     if (browserType.name() !== "firefox") {
@@ -36,7 +35,6 @@ export class FirefoxWithExtensions implements BrowserType {
     }
 
     this.defaultPort = defaultDebuggingServerPort;
-    this.addonPaths = typeof addonPaths === "string" ? [ addonPaths ] : addonPaths;
   }
 
   async connectOverCDP(

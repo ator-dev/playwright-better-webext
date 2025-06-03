@@ -19,7 +19,7 @@ export class ChromiumWithExtensions implements BrowserType {
 
   constructor(
     private readonly browserType: BrowserType,
-    extPaths: string | string[],
+    extPaths: string[],
   ) {
     if (browserType.name() !== "chromium") {
       throw new Error(`unexpected browser: ${browserType.name()}`);
