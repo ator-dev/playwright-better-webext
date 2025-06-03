@@ -12,13 +12,8 @@ export const createFixture = (extPaths: string | string[]) => {
       { scope: "worker", timeout: 0 },
     ],
     context: [
-      async ({ context, playwright, browserName, headless }, use) => {
+      async ({ context, playwright, browserName }, use) => {
         if (browserName === "chromium") {
-          if (headless) {
-            throw new Error(
-              "launching chromium with extensions is only supported in headed browsers",
-            );
-          }
           const browserType = withExtension(playwright[browserName], extPaths);
           const newContext = await browserType.launchPersistentContext("", {
             channel: "chromium",
