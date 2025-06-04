@@ -11,7 +11,8 @@
 ### Miscellaneous
 
 * Remove eslint prettier rules
-* Refactor slightly and change code style
+* Change some code style
+* Upgrade some packages and configuration
 
 
 ## [0.0.4](https://github.com/ueokande/playwright-webextext/compare/v0.0.3...v0.0.4) (2024-01-14)
