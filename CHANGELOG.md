@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.0.2](https://github.com/ator-dev/playwright-better-webext/compare/v0.0.4...v0.0.2) (2025-06-04)
+
+
+### Bug Fixes
+
+* automatic permission approval ([#273](https://github.com/ator-dev/playwright-better-webext/issues/273)) ([b969313](https://github.com/ator-dev/playwright-better-webext/commit/b969313eee69fd990dc5843e2e793608d92143af))
+* bump playwright to v1.31.2 ([#175](https://github.com/ator-dev/playwright-better-webext/issues/175)) ([d1f9145](https://github.com/ator-dev/playwright-better-webext/commit/d1f9145a3f47afd310276fbd198c1c96c08c166a))
+* change supported playwright version ([#264](https://github.com/ator-dev/playwright-better-webext/issues/264)) ([812b39a](https://github.com/ator-dev/playwright-better-webext/commit/812b39a89488f2d58f80b332ef57fd123d12accf))
+
+
+### Miscellaneous Chores
+
+* release 0.0.2 ([e9b8fcd](https://github.com/ator-dev/playwright-better-webext/commit/e9b8fcde8ecf2798929ee231d7c526ba1dfa8935))
+
 ## [0.0.4](https://github.com/ueokande/playwright-webextext/compare/v0.0.3...v0.0.4) (2024-01-14)
 
 

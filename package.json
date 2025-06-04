@@ -1,6 +1,6 @@
 {
   "name": "playwright-better-webext",
-  "version": "0.1.0",
+  "version": "0.0.2",
   "description": " A fork of ~ueokande's playwright-webextext, for testing WebExtensions in Firefox and Chromium",
   "repository": "git@github.com:ator-dev/playwright-better-webext.git",
   "author": "ator-dev <ator-dev@protonmail.com>",
