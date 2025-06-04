@@ -82,6 +82,7 @@ export class RemoteFirefox {
         );
       }
       return response.addonsActor;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (err) {
       // Fallback to listTabs otherwise, Firefox 49 - 77 (bug 1618691).
     }
