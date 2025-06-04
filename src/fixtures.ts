@@ -13,6 +13,7 @@ export const createFixture = (extensionPaths: string | string[]) => {
       if (browserName === "chromium") {
         const browserType = withExtension(playwright[browserName], extensionPaths);
         const newContext = await browserType.launchPersistentContext("", {
+          // Note: "chromium" channel is required to prevent displaying windows ('new headless mode')
           channel: "chromium",
           headless: true,
         });
