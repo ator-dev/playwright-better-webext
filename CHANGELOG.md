@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.1.0](https://github.com/ator-dev/playwright-webextext/compare/v0.0.4...v0.1.0) (2025-06-04)
+
+**Author:** @ator-dev
+
+### Changes
+
+* Use Chromium's 'new headless mode'; do not throw an error when Chromium used headless
+
+### Miscellaneous
+
+* Remove eslint prettier rules
+* Refactor slightly and change code style
+
+
 ## [0.0.4](https://github.com/ueokande/playwright-webextext/compare/v0.0.3...v0.0.4) (2024-01-14)
 
 ### Bug Fixes
